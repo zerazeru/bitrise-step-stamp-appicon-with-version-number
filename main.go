@@ -14,12 +14,10 @@ import (
 func main() {
 	iconPath := os.Getenv("stamp_path_to_icons")
 	version := os.Getenv("stamp_version")
-	buildNumber := os.Getenv("stamp_build_number")
 	fgColor := os.Getenv("foreground_color")
 	bgColor := os.Getenv("background_color")
 
 	fmt.Println("Version number to stamp:", version)
-	fmt.Println("Build number to stamp:", buildNumber)
 	fmt.Println("Foreground color is:", fgColor)
 	fmt.Println("Background color is:", bgColor)
 
@@ -58,14 +56,12 @@ func main() {
 		bannerH := int(math.Floor(float64(height) * 0.3))
 		bannerDims := strconv.Itoa(width) + "x" + strconv.Itoa(bannerH)
 
-		bannerCaption := "- " + version + "(" + buildNumber + ")" + " -"
-
 		imgOutString, error := exec.Command("convert",
 			"-background", bgColor,
 			"-fill", fgColor,
 			"-gravity", "center",
 			"-size", bannerDims,
-			"caption:"+bannerCaption,
+			"caption:"+version,
 			f, "+swap",
 			"-gravity", "south",
 			"-composite", f).CombinedOutput()
